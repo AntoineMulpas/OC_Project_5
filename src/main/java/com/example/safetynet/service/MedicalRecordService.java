@@ -10,7 +10,7 @@ import java.util.Optional;
 @Service
 public class MedicalRecordService {
 
-    private MedicalRecordsRepostiory medicalRecordsRepostiory;
+    private final MedicalRecordsRepostiory medicalRecordsRepostiory;
 
     @Autowired
     public MedicalRecordService(MedicalRecordsRepostiory medicalRecordsRepostiory) {
@@ -32,8 +32,8 @@ public class MedicalRecordService {
     public void updateAMedicalRecord(Long id, MedicalRecord medicalRecord) {
         Optional<MedicalRecord> medicalRecordFromDB = medicalRecordsRepostiory.findById(id);
         medicalRecord.setBirthdate(medicalRecordFromDB.get().getBirthdate());
-        medicalRecord.setMedicationId(medicalRecordFromDB.get().getMedicationId());
-        medicalRecord.setAllergiesId(medicalRecordFromDB.get().getAllergiesId());
+        medicalRecord.setMedications(medicalRecordFromDB.get().getMedications());
+        medicalRecord.setAllergies(medicalRecordFromDB.get().getAllergies());
         medicalRecordsRepostiory.save(medicalRecord);
     }
 }

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Map;
 
 @Entity(name = "MedicalRecord")
 @Table(name = "medical_record")
@@ -20,8 +21,12 @@ public class MedicalRecord {
     private String firstName;
     private String lastName;
     private String birthdate;
-    private Long medicationId;
-    private Long allergiesId;
+    @SuppressWarnings("JpaAttributeTypeInspection")
+    private String[] medications;
+    @SuppressWarnings("JpaAttributeTypeInspection")
+    private String[] allergies;
+
+
 
 
 }
