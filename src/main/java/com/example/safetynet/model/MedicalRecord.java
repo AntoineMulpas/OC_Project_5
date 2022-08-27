@@ -1,16 +1,17 @@
 package com.example.safetynet.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Entity(name = "MedicalRecord")
 @Table(name = "medical_record")
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class MedicalRecord {

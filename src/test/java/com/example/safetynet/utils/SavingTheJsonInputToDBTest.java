@@ -19,8 +19,8 @@ class SavingTheJsonInputToDBTest {
 
     @Test
     void gettingAndSavingDataFromJsonInputIntoDB() {
-        SaveJsonInputToDB savingTheJsonInputToDB = new SaveJsonInputToDB(personRepository, fireStationRepository, medicalRecordsRepostiory);
-        savingTheJsonInputToDB.gettingAndSavingDataFromJsonInputIntoDB();
+        SaveJsonInputToDB underTest = new SaveJsonInputToDB(personRepository, fireStationRepository, medicalRecordsRepostiory);
+        underTest.gettingAndSavingDataFromJsonInputIntoDB();
         personRepository.findAll().forEach(System.out::println);
         fireStationRepository.findAll().forEach(System.out::println);
         medicalRecordsRepostiory.findAll().forEach(System.out::println);

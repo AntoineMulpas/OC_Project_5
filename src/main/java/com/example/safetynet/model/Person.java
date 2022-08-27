@@ -9,26 +9,19 @@ import javax.persistence.*;
 @Getter
 @Setter
 @EqualsAndHashCode
-@NoArgsConstructor
-@RequiredArgsConstructor
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    @NonNull
     private String firstName;
-    @NonNull
     private String lastName;
-    @NonNull
     private String address;
-    @NonNull
     private String city;
-    @NonNull
     private String zip;
-    @NonNull
     private String phone;
-    @NonNull
     private String email;
 }

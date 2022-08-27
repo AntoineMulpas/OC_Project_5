@@ -7,14 +7,18 @@ import com.example.safetynet.repository.FireStationRepository;
 import com.example.safetynet.repository.MedicalRecordsRepostiory;
 import com.example.safetynet.repository.PersonRepository;
 import com.google.gson.Gson;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Date;
 import java.util.Map;
 
 @Service
@@ -23,6 +27,8 @@ public class SaveJsonInputToDB {
     private final PersonRepository personRepository;
     private final FireStationRepository fireStationRepository;
     private final MedicalRecordsRepostiory medicalRecordsRepostiory;
+    private static final Logger logger = LogManager.getLogger(SaveJsonInputToDB.class);
+
 
 
     @Autowired
@@ -33,8 +39,8 @@ public class SaveJsonInputToDB {
     }
 
 
+    @PostConstruct
     public void gettingAndSavingDataFromJsonInputIntoDB() {
-
         try {
             Reader reader = Files.newBufferedReader(Paths.get("src/main/resources/input/json_input"));
 
@@ -46,23 +52,30 @@ public class SaveJsonInputToDB {
             JSONArray jsonArray = object1.toJSONArray(namesOfJSONObject);
             for (int i = 0; i < jsonArray.length(); i++) {
                 for (int j = 0; j < jsonArray.getJSONArray(i).length(); j++) {
-                    switch (i) {
-                        case 0:
+                    switch (namesOfJSONObject.get(i).toString()) {
+                        case "persons":
                             Person person = gson.fromJson(String.valueOf(jsonArray.getJSONArray(i).getJSONObject(j)), Person.class);
                             personRepository.save(person);
                             break;
-                        case 1:
+                        case "firestations":
                             FireStation fireStation = gson.fromJson(String.valueOf(jsonArray.getJSONArray(i).getJSONObject(j)), FireStation.class);
                             fireStationRepository.save(fireStation);
                             break;
-                        case 2:
+                        case "medicalrecords":
                             MedicalRecord medicalRecord = gson.fromJson(String.valueOf(jsonArray.getJSONArray(i).getJSONObject(j)), MedicalRecord.class);
                             medicalRecordsRepostiory.save(medicalRecord);
                             break;
                     }
                 }
             }
+            System.out.println("Saving into DB with success.");
+            personRepository.findAll().forEach(System.out::println);
+            fireStationRepository.findAll().forEach(System.out::println);
+            medicalRecordsRepostiory.findAll().forEach(System.out::println);
+
         } catch (Exception e) {
+            System.out.println(e);
+            logger.error(e);
         }
 
     }

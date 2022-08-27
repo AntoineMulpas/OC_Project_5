@@ -1,5 +1,6 @@
 package com.example.safetynet.service;
 
+import com.example.safetynet.DTO.PhoneAlertDTO;
 import com.example.safetynet.model.FireStation;
 import com.example.safetynet.repository.FireStationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,12 @@ public class FireStationService {
         fireStationRepository.deleteById(id);
     }
 
-    public void updateAFireStations(Long id, FireStation fireStationToUpdate) throws Exception {
-        FireStation fireStation = fireStationRepository.findById(id).orElseThrow(() -> new Exception());
+    public void updateAFireStations(FireStation fireStationToUpdate) throws Exception {
+        FireStation fireStation = fireStationRepository.findByAddressEqualsAndStationEquals(fireStationToUpdate.getAddress(), fireStationToUpdate.getStation());
         fireStation.setStation(fireStationToUpdate.getStation());
+    }
+
+    public List<PhoneAlertDTO> getPhoneNumberOfPeopleForSpecificFirestation(String firestation) {
+        return fireStationRepository.getPhoneNumberOfPeopleForSpecificFirestation(firestation);
     }
 }

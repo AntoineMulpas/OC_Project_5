@@ -1,5 +1,7 @@
 package com.example.safetynet.service;
 
+import com.example.safetynet.DTO.InhabitantsByAddressDTO;
+import com.example.safetynet.DTO.PersonDTO;
 import com.example.safetynet.model.Person;
 import com.example.safetynet.repository.PersonRepository;
 import lombok.RequiredArgsConstructor;
@@ -34,5 +36,17 @@ public class PersonService {
         person.setPhone(personToUpdate.getPhone());
         person.setZip(personToUpdate.getZip());
         personRepository.save(person);
+    }
+
+    public List<String> getEmailForAllPeopleLivingInSpecificCity(String city) {
+        return personRepository.getEmailForAllPeopleLivingInSpecificCity(city);
+    }
+
+    public List<PersonDTO> getLastNameAndAddressAndAgeAndEmailAndMedicalRecordsForAPerson(String firstName, String lastName) {
+        return personRepository.getLastNameAndAddressAndAgeAndEmailAndMedicalRecordsForAPerson(firstName, lastName);
+    }
+
+    public List<InhabitantsByAddressDTO> getStationAndInhabitantsInformationByAddress(String address) {
+        return personRepository.getStationAndInhabitantsInformationByAddress(address);
     }
 }

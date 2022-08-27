@@ -51,17 +51,15 @@ public class FireStationController {
     }
 
 
-    @PutMapping("/{id}")
+    @PutMapping
     public ResponseEntity<String> updateAFireStation(
-            @PathVariable Long id,
             @RequestBody FireStation fireStation
     ) {
         try {
-            fireStationService.updateAFireStations(id, fireStation);
+            fireStationService.updateAFireStations(fireStation);
             return ResponseEntity.status(HttpStatus.OK).body("This fire station has been successfully updated");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Cannot update this fire station.");
         }
     }
-
 }
