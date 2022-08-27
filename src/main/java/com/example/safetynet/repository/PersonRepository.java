@@ -34,4 +34,7 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
             "join person as b on a.address = b.address " +
             "join medical_record as c on b.first_name = c.first_name and b.last_name = c.last_name",nativeQuery = true)
     List<InhabitantsByAddressDTO> getStationAndInhabitantsInformationByAddress(String address);
+
+    @Query("select a from Person a where a.firstName = ?1 and a.lastName = ?2")
+    List<Person> getAllPersonsBySpecificFirstNameAndLastName(String firstName, String lastName);
 }

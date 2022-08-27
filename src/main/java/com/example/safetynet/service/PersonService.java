@@ -49,4 +49,6 @@ public class PersonService {
     public List<InhabitantsByAddressDTO> getStationAndInhabitantsInformationByAddress(String address) {
         return personRepository.getStationAndInhabitantsInformationByAddress(address);
     }
+
+
 }
