@@ -2,6 +2,7 @@ package com.example.safetynet.repository;
 
 import com.example.safetynet.DTO.InhabitantsByAddressDTO;
 import com.example.safetynet.DTO.PersonByFireStationDTO;
+import com.example.safetynet.DTO.PersonCoveredByFireStationDTO;
 import com.example.safetynet.DTO.PersonDTO;
 import com.example.safetynet.model.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -37,4 +38,9 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 
     @Query("select a from Person a where a.firstName = ?1 and a.lastName = ?2")
     List<Person> getAllPersonsBySpecificFirstNameAndLastName(String firstName, String lastName);
+
+    @Query("select a from Person a where a.address = ?1")
+    List<Person> getListOfPersonLivingAtSpecificAddress(String address);
+
+
 }

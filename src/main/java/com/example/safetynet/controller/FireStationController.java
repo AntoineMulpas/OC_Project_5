@@ -1,8 +1,9 @@
 package com.example.safetynet.controller;
 
+import com.example.safetynet.DTO.PersonCoveredByFireStationDTO;
 import com.example.safetynet.model.FireStation;
-import com.example.safetynet.model.Person;
 import com.example.safetynet.service.FireStationService;
+import com.example.safetynet.service.PersonCoveredByFireStationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,16 +16,14 @@ import java.util.List;
 public class FireStationController {
 
     private final FireStationService fireStationService;
+    private final PersonCoveredByFireStationService personCoveredByFireStationService;
 
     @Autowired
-    public FireStationController(FireStationService fireStationService) {
+    public FireStationController(FireStationService fireStationService, PersonCoveredByFireStationService personCoveredByFireStationService) {
         this.fireStationService = fireStationService;
+        this.personCoveredByFireStationService = personCoveredByFireStationService;
     }
 
-    @GetMapping("/all")
-    public List<FireStation> getAllFireStations() {
-            return fireStationService.getAllFireStations();
-    }
 
     @PostMapping
     public ResponseEntity<String> addAFireStation(
@@ -62,4 +61,13 @@ public class FireStationController {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Cannot update this fire station.");
         }
     }
+
+
+    @GetMapping
+    public List <PersonCoveredByFireStationDTO> getListOfPersonByFireStation(
+            @RequestParam String stationNumber
+    ) {
+        return personCoveredByFireStationService.getPersonCoveredByFireStation(stationNumber);
+    }
+
 }

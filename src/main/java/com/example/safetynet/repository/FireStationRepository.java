@@ -23,4 +23,8 @@ public interface FireStationRepository extends JpaRepository<FireStation, Long> 
             "join medical_record as b on a.first_name = b.first_name and a.last_name = b.last_name " +
             "join fire_station as c on a.address = c.address where c.station = ?1", nativeQuery = true)
     List<FloodDTO> getPersonsInformationByStationInCaseOfFlood(String station);
+
+    @Query("select a from FireStation a where a.station = ?1")
+    List<FireStation> getAddressForSpecificStation(String station);
+
 }
