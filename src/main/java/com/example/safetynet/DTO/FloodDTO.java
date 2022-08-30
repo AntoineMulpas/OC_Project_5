@@ -1,14 +1,17 @@
 package com.example.safetynet.DTO;
 
+import lombok.*;
+
 import java.util.List;
 
-public interface FloodDTO {
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode
+public class FloodDTO {
 
-    String getAddress();
-    String getLast_name();
-    String getPhone();
-    String getBirthdate();
-    List<String> getMedications();
-    List<String> getAllergies();
+   private String address;
+   private FloodPersonInfoDTO floodPersonInfoDTO;
 
 }

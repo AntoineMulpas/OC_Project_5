@@ -1,5 +1,6 @@
 package com.example.safetynet.service;
 
+import com.example.safetynet.DTO.CountOfPersonDTO;
 import com.example.safetynet.DTO.PersonCoveredByFireStationDTO;
 import com.example.safetynet.model.FireStation;
 import com.example.safetynet.model.MedicalRecord;
@@ -33,17 +34,15 @@ public class PersonCoveredByFireStationService {
 
     public List<PersonCoveredByFireStationDTO> getPersonCoveredByFireStation(String station) {
         List<PersonCoveredByFireStationDTO> getListOfPersonCoveredByFireStation = new ArrayList <>();
+        List <Person> getListOfPersonLivingAtSpecificAddress = gettingListOfPersonLivingAtSpecificAddress(station);
         List<MedicalRecord> getMedicalRecordOfPerson = new ArrayList<>();
+        List <Integer> listOfAgeOfPerson = gettingAgeOfPersons(getListOfPersonLivingAtSpecificAddress, getMedicalRecordOfPerson);
 
-        List<FireStation> getAddressCoveredByFireStation = fireStationRepository.getAddressForSpecificStation(station);
-        List<Person> getListOfPersonLivingAtSpecificAddress = new ArrayList<>();
-        getAddressCoveredByFireStation.forEach(fireStation -> {
-            List<Person> listOfPerson = personRepository.getListOfPersonLivingAtSpecificAddress(fireStation.getAddress());
-            getListOfPersonLivingAtSpecificAddress.addAll(listOfPerson);
-        });
+        return listOfPersonCoveredByFireStation(getListOfPersonCoveredByFireStation, getListOfPersonLivingAtSpecificAddress, listOfAgeOfPerson);
+    }
 
 
-
+    private List <Integer> gettingAgeOfPersons(List <Person> getListOfPersonLivingAtSpecificAddress, List <MedicalRecord> getMedicalRecordOfPerson) {
         getListOfPersonLivingAtSpecificAddress.forEach(person -> {
             MedicalRecord recordOfSpecificPerson = medicalRecordsRepostiory.findByLastNameEqualsAndFirstNameEquals(person.getLastName(), person.getFirstName());
             getMedicalRecordOfPerson.add(recordOfSpecificPerson);
@@ -56,8 +55,20 @@ public class PersonCoveredByFireStationService {
             int age = Period.between(birthdate, LocalDate.now()).getYears();
             listOfAgeOfPerson.add(age);
         });
+        return listOfAgeOfPerson;
+    }
 
+    private List <Person> gettingListOfPersonLivingAtSpecificAddress(String station) {
+        List<FireStation> getAddressCoveredByFireStation = fireStationRepository.getAddressForSpecificStation(station);
+        List<Person> getListOfPersonLivingAtSpecificAddress = new ArrayList<>();
+        getAddressCoveredByFireStation.forEach(fireStation -> {
+            List<Person> listOfPerson = personRepository.getListOfPersonLivingAtSpecificAddress(fireStation.getAddress());
+            getListOfPersonLivingAtSpecificAddress.addAll(listOfPerson);
+        });
+        return getListOfPersonLivingAtSpecificAddress;
+    }
 
+    private List <PersonCoveredByFireStationDTO> listOfPersonCoveredByFireStation(List <PersonCoveredByFireStationDTO> getListOfPersonCoveredByFireStation, List <Person> getListOfPersonLivingAtSpecificAddress, List <Integer> listOfAgeOfPerson) {
         long adultCount = listOfAgeOfPerson.stream().filter(integer -> integer > 18).count();
         long childCount = listOfAgeOfPerson.stream().filter(integer -> integer <= 18).count();
 
@@ -68,12 +79,11 @@ public class PersonCoveredByFireStationService {
             personDTO.setLastName(person.getLastName());
             personDTO.setAddress(person.getAddress());
             personDTO.setPhone(person.getPhone());
-            personDTO.setAdultCount(adultCount);
-            personDTO.setChildCount(childCount);
+            personDTO.setCountOfPersonDTO(new CountOfPersonDTO(adultCount, childCount));
             getListOfPersonCoveredByFireStation.add(personDTO);
         });
 
-        return  getListOfPersonCoveredByFireStation;
+        return getListOfPersonCoveredByFireStation;
     }
 
 }

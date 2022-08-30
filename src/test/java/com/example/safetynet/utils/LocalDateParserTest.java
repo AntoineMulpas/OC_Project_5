@@ -10,6 +10,8 @@ class LocalDateParserTest {
 
     @Test
     void dateParser() {
-        LocalDateParser.dateParser("03/06/1984");
+        String dateToParseFromMethod = "01/01/2022";
+        String dateToCompareWith = "2022-01-01";
+        assertEquals(LocalDateParser.dateParser(dateToParseFromMethod), LocalDate.parse(dateToCompareWith));
     }
 }

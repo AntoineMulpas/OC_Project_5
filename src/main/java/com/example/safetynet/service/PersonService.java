@@ -45,10 +45,4 @@ public class PersonService {
     public List<PersonDTO> getLastNameAndAddressAndAgeAndEmailAndMedicalRecordsForAPerson(String firstName, String lastName) {
         return personRepository.getLastNameAndAddressAndAgeAndEmailAndMedicalRecordsForAPerson(firstName, lastName);
     }
-
-    public List<InhabitantsByAddressDTO> getStationAndInhabitantsInformationByAddress(String address) {
-        return personRepository.getStationAndInhabitantsInformationByAddress(address);
-    }
-
-
 }

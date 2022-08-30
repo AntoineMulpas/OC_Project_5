@@ -1,7 +1,7 @@
 package com.example.safetynet.controller;
 
 import com.example.safetynet.DTO.FloodDTO;
-import com.example.safetynet.service.FireStationService;
+import com.example.safetynet.service.FloodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,18 +12,18 @@ import java.util.List;
 @RestController
 public class FloodController {
 
-    private final FireStationService fireStationService;
+    private final FloodService floodService;
 
     @Autowired
-    public FloodController(FireStationService fireStationService) {
-        this.fireStationService = fireStationService;
+    public FloodController(FloodService floodService) {
+        this.floodService = floodService;
     }
 
     @GetMapping("/flood")
     List<FloodDTO> getPersonsInformationByStationInCaseOfFlood(
             @RequestParam List<String> stations
     ) {
-        return fireStationService.getPersonsInformationByStationInCaseOfFlood(stations);
+        return floodService.getPersonsInformationByStationInCaseOfFlood(stations);
     }
 
 }

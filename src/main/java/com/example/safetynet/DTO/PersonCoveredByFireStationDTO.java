@@ -13,7 +13,6 @@ public class PersonCoveredByFireStationDTO {
     private String lastName;
     private String address;
     private String phone;
-    private Long adultCount;
-    private Long childCount;
+    private CountOfPersonDTO countOfPersonDTO;
 
 }

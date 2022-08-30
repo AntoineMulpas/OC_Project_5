@@ -1,30 +1,23 @@
 package com.example.safetynet.service;
 
-import com.example.safetynet.DTO.FloodDTO;
 import com.example.safetynet.DTO.PhoneAlertDTO;
 import com.example.safetynet.model.FireStation;
 import com.example.safetynet.repository.FireStationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class FireStationService {
 
-    private FireStationRepository fireStationRepository;
+    private final FireStationRepository fireStationRepository;
 
     @Autowired
     public FireStationService(FireStationRepository fireStationRepository) {
         this.fireStationRepository = fireStationRepository;
     }
 
-
-    public List<FireStation> getAllFireStations() {
-        return fireStationRepository.findAll();
-    }
 
     public void addAFireStation(FireStation fireStation) {
         fireStationRepository.save(fireStation);
@@ -34,18 +27,13 @@ public class FireStationService {
         fireStationRepository.deleteById(id);
     }
 
-    public void updateAFireStations(FireStation fireStationToUpdate) throws Exception {
+    public void updateAFireStations(FireStation fireStationToUpdate) {
         FireStation fireStation = fireStationRepository.findByAddressEqualsAndStationEquals(fireStationToUpdate.getAddress(), fireStationToUpdate.getStation());
         fireStation.setStation(fireStationToUpdate.getStation());
     }
 
     public List<PhoneAlertDTO> getPhoneNumberOfPeopleForSpecificFirestation(String firestation) {
-        return fireStationRepository.getPhoneNumberOfPeopleForSpecificFirestation(firestation);
+        return fireStationRepository.getPhoneNumberOfPeopleForSpecificFireStation(firestation);
     }
 
-    public List<FloodDTO> getPersonsInformationByStationInCaseOfFlood(List<String> stations) {
-        List<FloodDTO> getListToReturn = new ArrayList <>();
-
-        return  getListToReturn;
-    }
 }

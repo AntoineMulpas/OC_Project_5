@@ -1,21 +1,18 @@
 package com.example.safetynet.DTO;
 
 import com.example.safetynet.model.MedicalRecord;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class InhabitantsByAddressDTO {
+@AllArgsConstructor
+@EqualsAndHashCode
+public class FloodPersonInfoDTO {
 
     private String lastName;
     private String phone;
     private Integer age;
     private MedicalRecord medicalRecord;
-    private String station;
 
 }
