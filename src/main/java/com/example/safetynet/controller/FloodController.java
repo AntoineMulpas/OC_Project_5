@@ -20,7 +20,7 @@ public class FloodController {
     }
 
     @GetMapping("/flood")
-    List<FloodDTO> getPersonsInformationByStationInCaseOfFlood(
+    public List<FloodDTO> getPersonsInformationByStationInCaseOfFlood(
             @RequestParam List<String> stations
     ) {
         return floodService.getPersonsInformationByStationInCaseOfFlood(stations);

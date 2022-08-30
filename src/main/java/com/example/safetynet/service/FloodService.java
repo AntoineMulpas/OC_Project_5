@@ -31,7 +31,7 @@ public class FloodService {
     }
 
     public List<FloodDTO> getPersonsInformationByStationInCaseOfFlood(List<String> stations) {
-        List<FloodDTO> getListToReturn = new ArrayList <>();
+        List<FloodDTO> floodDTO = new ArrayList<>();
 
         List<String> listOfAddress = new ArrayList<>();
         List<List <FireStation>> listOfStationFilteredByStationNumber = new ArrayList <>();
@@ -76,6 +76,6 @@ public class FloodService {
 
         floodPersonInfoDTOS.forEach(System.out::println);
 
-        return  getListToReturn;
+        return  floodDTO;
     }
 }
