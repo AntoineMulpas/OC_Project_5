@@ -1,6 +1,7 @@
 package com.example.safetynet.service;
 
 import com.example.safetynet.DTO.FloodDTO;
+import com.example.safetynet.DTO.FloodMedicalRecordDTO;
 import com.example.safetynet.DTO.FloodPersonInfoDTO;
 import com.example.safetynet.model.FireStation;
 import com.example.safetynet.model.MedicalRecord;
@@ -32,50 +33,72 @@ public class FloodService {
 
     public List<FloodDTO> getPersonsInformationByStationInCaseOfFlood(List<String> stations) {
         List<FloodDTO> floodDTO = new ArrayList<>();
-
         List<String> listOfAddress = new ArrayList<>();
-        List<List <FireStation>> listOfStationFilteredByStationNumber = new ArrayList <>();
-        stations.forEach(s -> listOfStationFilteredByStationNumber.add(fireStationRepository.findByStationEquals(s)));
-        listOfStationFilteredByStationNumber.forEach(fireStations -> fireStations.forEach(fireStation -> listOfAddress.add(fireStation.getAddress())));
-
         List <List <Person>> personListLivingAtSpecificAddress = new ArrayList <>();
-        listOfAddress.forEach(s -> {
-            personListLivingAtSpecificAddress.add(personRepository.getListOfPersonLivingAtSpecificAddress(s));
-        });
-
-
         List<MedicalRecord> medicalRecordList = new ArrayList<>();
-        personListLivingAtSpecificAddress.forEach(people -> people.forEach(person -> medicalRecordList.add(medicalRecordsRepostiory.findByLastNameEqualsAndFirstNameEquals(person.getLastName(), person.getFirstName()))));
+
+        gettingAddressesOfStationByStationNumber(stations, listOfAddress);
+        gettingPersonsLivingAtSpecificAddress(listOfAddress, personListLivingAtSpecificAddress);
+        gettingMedicalRecordOfPerson(personListLivingAtSpecificAddress, medicalRecordList);
+
+
 
         List<FloodPersonInfoDTO> floodPersonInfoDTOS = new ArrayList<>();
         personListLivingAtSpecificAddress.forEach(people -> people.forEach(person -> {
-            MedicalRecord medicalRecord = new MedicalRecord();
+            final int[] age = {0};
+            FloodMedicalRecordDTO medicalRecord = new FloodMedicalRecordDTO();
             medicalRecordList
                     .stream()
                     .filter(medicalRecord1 ->
-                            medicalRecord1.getLastName().equals(person.getLastName())
-                                    && medicalRecord1.getFirstName().equals(person.getFirstName()))
-                    .forEach(medicalRecord1 -> {
-                        medicalRecord.setLastName(medicalRecord1.getLastName());
-                        medicalRecord.setFirstName(medicalRecord1.getFirstName());
-                        medicalRecord.setBirthdate(medicalRecord1.getBirthdate());
-                        medicalRecord.setMedications(medicalRecord1.getMedications());
-                        medicalRecord.setAllergies(medicalRecord1.getAllergies());
-                    });
+                            medicalRecord1.getLastName().equals(person.getLastName()) && medicalRecord1.getFirstName().equals(person.getFirstName()))
+                    .forEach(medicalRecord1 -> setMedicalRecord(age, medicalRecord, medicalRecord1));
 
-            int age = LocalDate.now().getYear() - LocalDateParser.dateParser(medicalRecord.getBirthdate()).getYear();
-            FloodPersonInfoDTO personInfoDTO = new FloodPersonInfoDTO();
-            personInfoDTO.setLastName(person.getLastName());
-            personInfoDTO.setPhone(person.getPhone());
-            personInfoDTO.setMedicalRecord(medicalRecord);
-            personInfoDTO.setAge(age);
+            FloodPersonInfoDTO personInfoDTO = getFloodPersonInfoDTO(person, age, medicalRecord);
             floodPersonInfoDTOS.add(personInfoDTO);
-        }));
 
+            FloodDTO dtoToReturn = getFloodDTO(person, personInfoDTO);
+            floodDTO.add(dtoToReturn);
+        }));
 
 
         floodPersonInfoDTOS.forEach(System.out::println);
 
         return  floodDTO;
+    }
+
+    private FloodDTO getFloodDTO(Person person, FloodPersonInfoDTO personInfoDTO) {
+        FloodDTO dtoToReturn = new FloodDTO();
+        dtoToReturn.setAddress(person.getAddress());
+        dtoToReturn.setFloodPersonInfoDTO(personInfoDTO);
+        return dtoToReturn;
+    }
+
+    private void setMedicalRecord(int[] age, FloodMedicalRecordDTO medicalRecord, MedicalRecord medicalRecord1) {
+        medicalRecord.setMedications(medicalRecord1.getMedications());
+        medicalRecord.setAllergies(medicalRecord1.getAllergies());
+        age[0] = (LocalDate.now().getYear() - LocalDateParser.dateParser(medicalRecord1.getBirthdate()).getYear());
+    }
+
+    private FloodPersonInfoDTO getFloodPersonInfoDTO(Person person, int[] age, FloodMedicalRecordDTO medicalRecord) {
+        FloodPersonInfoDTO personInfoDTO = new FloodPersonInfoDTO();
+        personInfoDTO.setLastName(person.getLastName());
+        personInfoDTO.setPhone(person.getPhone());
+        personInfoDTO.setFloodMedicalRecordDTO(medicalRecord);
+        personInfoDTO.setAge(age[0]);
+        return personInfoDTO;
+    }
+
+    private void gettingMedicalRecordOfPerson(List <List <Person>> personListLivingAtSpecificAddress, List <MedicalRecord> medicalRecordList) {
+        personListLivingAtSpecificAddress.forEach(people -> people.forEach(person -> medicalRecordList.add(medicalRecordsRepostiory.findByLastNameEqualsAndFirstNameEquals(person.getLastName(), person.getFirstName()))));
+    }
+
+    private void gettingPersonsLivingAtSpecificAddress(List <String> listOfAddress, List <List <Person>> personListLivingAtSpecificAddress) {
+        listOfAddress.forEach(s -> personListLivingAtSpecificAddress.add(personRepository.getListOfPersonLivingAtSpecificAddress(s)));
+    }
+
+    private void gettingAddressesOfStationByStationNumber(List <String> stations, List <String> listOfAddress) {
+        List<List <FireStation>> listOfStationFilteredByStationNumber = new ArrayList <>();
+        stations.forEach(s -> listOfStationFilteredByStationNumber.add(fireStationRepository.findByStationEquals(s)));
+        listOfStationFilteredByStationNumber.forEach(fireStations -> fireStations.forEach(fireStation -> listOfAddress.add(fireStation.getAddress())));
     }
 }

@@ -2,7 +2,6 @@ package com.example.safetynet.DTO;
 
 import lombok.*;
 
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor

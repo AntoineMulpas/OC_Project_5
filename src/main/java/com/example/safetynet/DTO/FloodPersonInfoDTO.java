@@ -14,6 +14,6 @@ public class FloodPersonInfoDTO {
     private String lastName;
     private String phone;
     private Integer age;
-    private MedicalRecord medicalRecord;
+    private FloodMedicalRecordDTO floodMedicalRecordDTO;
 
 }
