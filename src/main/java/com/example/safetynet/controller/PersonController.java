@@ -50,7 +50,7 @@ public class PersonController {
     }
 
 
-    @PutMapping("/{id}")
+    @PutMapping()
     public ResponseEntity<String> updateAPerson(
             @PathVariable Long id,
             @RequestBody Person person

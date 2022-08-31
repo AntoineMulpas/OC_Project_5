@@ -1,6 +1,5 @@
 package com.example.safetynet.service;
 
-import com.example.safetynet.DTO.InhabitantsByAddressDTO;
 import com.example.safetynet.DTO.PersonDTO;
 import com.example.safetynet.model.Person;
 import com.example.safetynet.repository.PersonRepository;
@@ -20,7 +19,7 @@ public class PersonService {
         personRepository.save(person);
     }
 
-    public List<Person> getAllPerson() {
+    public List <Person> getAllPerson() {
         return personRepository.findAll();
     }
 
@@ -28,8 +27,8 @@ public class PersonService {
         personRepository.deleteByFirstNameEqualsAndLastNameEquals(firstName, lastName);
     }
 
-    public void updateAPerson(Long id, Person personToUpdate) throws Exception { // Return saved object
-        Person person = personRepository.findById(id).orElseThrow(() -> new Exception("Cannot find this person."));
+    public void updateAPerson(Long id, Person personToUpdate) {
+        Person person = personRepository.findById(id).orElseThrow();
         person.setAddress(personToUpdate.getAddress());
         person.setCity(personToUpdate.getCity());
         person.setEmail(personToUpdate.getEmail());
@@ -38,11 +37,11 @@ public class PersonService {
         personRepository.save(person);
     }
 
-    public List<String> getEmailForAllPeopleLivingInSpecificCity(String city) {
+    public List <String> getEmailForAllPeopleLivingInSpecificCity(String city) {
         return personRepository.getEmailForAllPeopleLivingInSpecificCity(city);
     }
 
-    public List<PersonDTO> getLastNameAndAddressAndAgeAndEmailAndMedicalRecordsForAPerson(String firstName, String lastName) {
+    public List <PersonDTO> getLastNameAndAddressAndAgeAndEmailAndMedicalRecordsForAPerson(String firstName, String lastName) {
         return personRepository.getLastNameAndAddressAndAgeAndEmailAndMedicalRecordsForAPerson(firstName, lastName);
     }
 }
