@@ -11,7 +11,6 @@ import java.util.Date;
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class MedicalRecord {

@@ -1,8 +1,8 @@
 package com.example.safetynet.service;
 
-import com.example.safetynet.DTO.FloodDTO;
-import com.example.safetynet.DTO.FloodMedicalRecordDTO;
-import com.example.safetynet.DTO.FloodPersonInfoDTO;
+import com.example.safetynet.model.FloodDTO;
+import com.example.safetynet.model.FloodMedicalRecordDTO;
+import com.example.safetynet.model.FloodPersonInfoDTO;
 import com.example.safetynet.model.FireStation;
 import com.example.safetynet.model.MedicalRecord;
 import com.example.safetynet.model.Person;

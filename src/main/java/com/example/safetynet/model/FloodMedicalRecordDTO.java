@@ -1,11 +1,10 @@
-package com.example.safetynet.DTO;
+package com.example.safetynet.model;
 
 import lombok.*;
 
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class FloodMedicalRecordDTO {

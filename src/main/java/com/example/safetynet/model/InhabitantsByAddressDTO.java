@@ -1,4 +1,4 @@
-package com.example.safetynet.DTO;
+package com.example.safetynet.model;
 
 import com.example.safetynet.model.MedicalRecord;
 import lombok.AllArgsConstructor;

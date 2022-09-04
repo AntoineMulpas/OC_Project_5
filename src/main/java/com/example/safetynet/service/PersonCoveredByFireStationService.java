@@ -1,7 +1,7 @@
 package com.example.safetynet.service;
 
-import com.example.safetynet.DTO.CountOfPersonDTO;
-import com.example.safetynet.DTO.PersonCoveredByFireStationDTO;
+import com.example.safetynet.model.CountOfPersonDTO;
+import com.example.safetynet.model.PersonCoveredByFireStationDTO;
 import com.example.safetynet.model.FireStation;
 import com.example.safetynet.model.MedicalRecord;
 import com.example.safetynet.model.Person;

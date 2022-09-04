@@ -1,6 +1,6 @@
 package com.example.safetynet.service;
 
-import com.example.safetynet.DTO.InhabitantsByAddressDTO;
+import com.example.safetynet.model.InhabitantsByAddressDTO;
 import com.example.safetynet.model.FireStation;
 import com.example.safetynet.model.MedicalRecord;
 import com.example.safetynet.model.Person;

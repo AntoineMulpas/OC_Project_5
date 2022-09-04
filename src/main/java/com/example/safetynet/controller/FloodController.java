@@ -1,6 +1,6 @@
 package com.example.safetynet.controller;
 
-import com.example.safetynet.DTO.FloodDTO;
+import com.example.safetynet.model.FloodDTO;
 import com.example.safetynet.service.FloodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

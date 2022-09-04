@@ -1,7 +1,9 @@
-package com.example.safetynet.DTO;
+package com.example.safetynet.model;
 
-import com.example.safetynet.model.Person;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 

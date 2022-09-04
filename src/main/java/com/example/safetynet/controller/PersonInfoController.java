@@ -1,6 +1,6 @@
 package com.example.safetynet.controller;
 
-import com.example.safetynet.DTO.PersonInfoDTO;
+import com.example.safetynet.model.PersonInfoDTO;
 import com.example.safetynet.service.PersonInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

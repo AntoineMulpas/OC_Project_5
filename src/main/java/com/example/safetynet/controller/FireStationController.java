@@ -1,6 +1,6 @@
 package com.example.safetynet.controller;
 
-import com.example.safetynet.DTO.PersonCoveredByFireStationDTO;
+import com.example.safetynet.model.PersonCoveredByFireStationDTO;
 import com.example.safetynet.model.FireStation;
 import com.example.safetynet.service.FireStationService;
 import com.example.safetynet.service.PersonCoveredByFireStationService;

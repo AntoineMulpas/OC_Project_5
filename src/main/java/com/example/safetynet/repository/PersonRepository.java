@@ -1,8 +1,8 @@
 package com.example.safetynet.repository;
 
-import com.example.safetynet.DTO.InhabitantsByAddressDTO;
-import com.example.safetynet.DTO.PersonByFireStationDTO;
-import com.example.safetynet.DTO.PersonDTO;
+import com.example.safetynet.model.InhabitantsByAddressDTO;
+import com.example.safetynet.model.PersonByFireStationDTO;
+import com.example.safetynet.model.PersonDTO;
 import com.example.safetynet.model.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

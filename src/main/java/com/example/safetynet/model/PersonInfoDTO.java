@@ -1,4 +1,4 @@
-package com.example.safetynet.DTO;
+package com.example.safetynet.model;
 
 import lombok.*;
 
@@ -7,7 +7,6 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class PersonInfoDTO {

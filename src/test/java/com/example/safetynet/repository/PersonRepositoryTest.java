@@ -1,6 +1,5 @@
 package com.example.safetynet.repository;
 
-import com.example.safetynet.DTO.PersonDTO;
 import com.example.safetynet.model.FireStation;
 import com.example.safetynet.model.MedicalRecord;
 import com.example.safetynet.model.Person;
@@ -9,8 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

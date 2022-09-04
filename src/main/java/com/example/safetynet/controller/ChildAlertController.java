@@ -1,6 +1,6 @@
 package com.example.safetynet.controller;
 
-import com.example.safetynet.DTO.ChildAlertDTO;
+import com.example.safetynet.model.ChildAlertDTO;
 import com.example.safetynet.service.ChildAlertService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

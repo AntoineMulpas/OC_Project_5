@@ -1,6 +1,6 @@
 package com.example.safetynet.controller;
 
-import com.example.safetynet.DTO.PhoneAlertDTO;
+import com.example.safetynet.model.PhoneAlertDTO;
 import com.example.safetynet.service.FireStationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

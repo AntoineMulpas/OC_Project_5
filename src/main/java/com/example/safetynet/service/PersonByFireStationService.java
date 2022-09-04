@@ -1,6 +1,6 @@
 package com.example.safetynet.service;
 
-import com.example.safetynet.DTO.PersonByFireStationDTO;
+import com.example.safetynet.model.PersonByFireStationDTO;
 import com.example.safetynet.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

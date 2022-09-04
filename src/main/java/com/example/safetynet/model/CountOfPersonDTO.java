@@ -1,4 +1,4 @@
-package com.example.safetynet.DTO;
+package com.example.safetynet.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

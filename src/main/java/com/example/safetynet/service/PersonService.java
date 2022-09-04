@@ -1,6 +1,6 @@
 package com.example.safetynet.service;
 
-import com.example.safetynet.DTO.PersonDTO;
+import com.example.safetynet.model.PersonDTO;
 import com.example.safetynet.model.Person;
 import com.example.safetynet.repository.PersonRepository;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package com.example.safetynet.service;
 
-import com.example.safetynet.DTO.PhoneAlertDTO;
+import com.example.safetynet.model.PhoneAlertDTO;
 import com.example.safetynet.model.FireStation;
 import com.example.safetynet.repository.FireStationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +30,7 @@ public class FireStationService {
     public void updateAFireStations(FireStation fireStationToUpdate) {
         FireStation fireStation = fireStationRepository.findByAddressEqualsAndStationEquals(fireStationToUpdate.getAddress(), fireStationToUpdate.getStation());
         fireStation.setStation(fireStationToUpdate.getStation());
+        fireStationRepository.save(fireStation);
     }
 
     public List<PhoneAlertDTO> getPhoneNumberOfPeopleForSpecificFirestation(String firestation) {

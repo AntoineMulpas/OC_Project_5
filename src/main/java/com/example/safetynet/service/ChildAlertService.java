@@ -1,6 +1,6 @@
 package com.example.safetynet.service;
 
-import com.example.safetynet.DTO.ChildAlertDTO;
+import com.example.safetynet.model.ChildAlertDTO;
 import com.example.safetynet.model.MedicalRecord;
 import com.example.safetynet.model.Person;
 import com.example.safetynet.repository.MedicalRecordsRepostiory;

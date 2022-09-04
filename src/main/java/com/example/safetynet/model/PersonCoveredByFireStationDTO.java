@@ -1,10 +1,9 @@
-package com.example.safetynet.DTO;
+package com.example.safetynet.model;
 
 import lombok.*;
 
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class PersonCoveredByFireStationDTO {
