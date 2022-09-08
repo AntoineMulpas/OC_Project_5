@@ -45,7 +45,7 @@ public class MedicalRecordController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping
     public ResponseEntity<String> updateAMedicalRecord(
             @RequestBody MedicalRecord medicalRecord
     ) {
