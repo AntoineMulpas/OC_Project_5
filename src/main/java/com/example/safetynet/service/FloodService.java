@@ -33,36 +33,31 @@ public class FloodService {
 
     public List<FloodDTO> getPersonsInformationByStationInCaseOfFlood(List<String> stations) {
         List<FloodDTO> floodDTO = new ArrayList<>();
-        List<String> listOfAddress = new ArrayList<>();
-        List <List <Person>> personListLivingAtSpecificAddress = new ArrayList <>();
-        List<MedicalRecord> medicalRecordList = new ArrayList<>();
+        List <FloodPersonInfoDTO> floodPersonInfoDTOS = new ArrayList <>();
+            List <String> listOfAddress = new ArrayList <>();
+            List <List <Person>> personListLivingAtSpecificAddress = new ArrayList <>();
+            List <MedicalRecord> medicalRecordList = new ArrayList <>();
 
-        gettingAddressesOfStationByStationNumber(stations, listOfAddress);
-        gettingPersonsLivingAtSpecificAddress(listOfAddress, personListLivingAtSpecificAddress);
-        gettingMedicalRecordOfPerson(personListLivingAtSpecificAddress, medicalRecordList);
-
-
-
-        List<FloodPersonInfoDTO> floodPersonInfoDTOS = new ArrayList<>();
-        personListLivingAtSpecificAddress.forEach(people -> people.forEach(person -> {
-            final int[] age = {0};
-            FloodMedicalRecordDTO medicalRecord = new FloodMedicalRecordDTO();
-            medicalRecordList
-                    .stream()
-                    .filter(medicalRecord1 ->
-                            medicalRecord1.getLastName().equals(person.getLastName()) && medicalRecord1.getFirstName().equals(person.getFirstName()))
-                    .forEach(medicalRecord1 -> setMedicalRecord(age, medicalRecord, medicalRecord1));
-
-            FloodPersonInfoDTO personInfoDTO = getFloodPersonInfoDTO(person, age, medicalRecord);
-            floodPersonInfoDTOS.add(personInfoDTO);
-
-            FloodDTO dtoToReturn = getFloodDTO(person, personInfoDTO);
-            floodDTO.add(dtoToReturn);
-        }));
+            gettingAddressesOfStationByStationNumber(stations, listOfAddress);
+            gettingPersonsLivingAtSpecificAddress(listOfAddress, personListLivingAtSpecificAddress);
+            gettingMedicalRecordOfPerson(personListLivingAtSpecificAddress, medicalRecordList);
 
 
-        floodPersonInfoDTOS.forEach(System.out::println);
+            personListLivingAtSpecificAddress.forEach(people -> people.forEach(person -> {
+                final int[] age = {0};
+                FloodMedicalRecordDTO medicalRecord = new FloodMedicalRecordDTO();
+                medicalRecordList
+                        .stream()
+                        .filter(medicalRecord1 -> medicalRecord1 != null)
+                        .filter(medicalRecord1 -> medicalRecord1.getLastName().equals(person.getLastName()) && medicalRecord1.getFirstName().equals(person.getFirstName()))
+                        .forEach(medicalRecord1 -> setMedicalRecord(age, medicalRecord, medicalRecord1));
 
+                FloodPersonInfoDTO personInfoDTO = getFloodPersonInfoDTO(person, age, medicalRecord);
+                floodPersonInfoDTOS.add(personInfoDTO);
+
+                FloodDTO dtoToReturn = getFloodDTO(person, personInfoDTO);
+                floodDTO.add(dtoToReturn);
+            }));
         return  floodDTO;
     }
 
@@ -89,7 +84,11 @@ public class FloodService {
     }
 
     private void gettingMedicalRecordOfPerson(List <List <Person>> personListLivingAtSpecificAddress, List <MedicalRecord> medicalRecordList) {
+        try {
         personListLivingAtSpecificAddress.forEach(people -> people.forEach(person -> medicalRecordList.add(medicalRecordsRepostiory.findByLastNameEqualsAndFirstNameEquals(person.getLastName(), person.getFirstName()))));
+        } catch (RuntimeException e) {
+            personListLivingAtSpecificAddress.forEach(people -> people.forEach(person -> medicalRecordList.add(null)));
+        }
     }
 
     private void gettingPersonsLivingAtSpecificAddress(List <String> listOfAddress, List <List <Person>> personListLivingAtSpecificAddress) {

@@ -1,12 +1,13 @@
 package com.example.safetynet.service;
 
-import com.example.safetynet.model.PhoneAlertDTO;
 import com.example.safetynet.model.FireStation;
+import com.example.safetynet.model.PhoneAlertDTO;
 import com.example.safetynet.repository.FireStationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FireStationService {
@@ -28,9 +29,12 @@ public class FireStationService {
     }
 
     public void updateAFireStations(FireStation fireStationToUpdate) {
-        FireStation fireStation = fireStationRepository.findByAddressEqualsAndStationEquals(fireStationToUpdate.getAddress(), fireStationToUpdate.getStation());
-        fireStation.setStation(fireStationToUpdate.getStation());
-        fireStationRepository.save(fireStation);
+        Optional <FireStation> fireStationFromDB = fireStationRepository.findById(fireStationToUpdate.getId());
+        if (fireStationFromDB.isPresent()) {
+            FireStation fireStation = fireStationFromDB.get();
+            fireStation.setStation(fireStationToUpdate.getStation());
+            fireStationRepository.save(fireStation);
+        }
     }
 
     public List<PhoneAlertDTO> getPhoneNumberOfPeopleForSpecificFirestation(String firestation) {

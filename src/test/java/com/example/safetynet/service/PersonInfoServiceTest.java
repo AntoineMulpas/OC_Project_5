@@ -44,10 +44,6 @@ class PersonInfoServiceTest {
         );
     }
 
-    @AfterEach
-    void tearDown() {
-        underTest = null;
-    }
 
     @Test
     void getPersonInfoOfAnInhabitant() {
@@ -68,5 +64,47 @@ class PersonInfoServiceTest {
         when(personRepository.getAllPersonsBySpecificFirstNameAndLastName(anyString(), anyString())).thenReturn(personList);
         when(medicalRecordsRepostiory.getMedicalRecordsForSpecificFirstNameAndLastName(anyString(), anyString())).thenReturn(list);
         assertEquals("Antoine", underTest.getPersonInfoOfAnInhabitant("Antoine", "Antoine").get(0).getLastName());
+    }
+
+    @Test
+    void getPersonInfoOfAnInhabitantWhereFirstNameNotEquals() {
+        String[] medications = {"1", "2"};
+        List<MedicalRecord> list = new ArrayList<>();
+        String[] allergies = {"1, 2"};
+        list.add(new MedicalRecord(
+                1L,
+                "Mustang",
+                "Antoine",
+                "03/29/1992",
+                medications,
+                allergies
+        ));
+        List<Person> personList = new ArrayList<>();
+        personList.add(person);
+
+        when(personRepository.getAllPersonsBySpecificFirstNameAndLastName(anyString(), anyString())).thenReturn(personList);
+        when(medicalRecordsRepostiory.getMedicalRecordsForSpecificFirstNameAndLastName(anyString(), anyString())).thenReturn(list);
+        assertEquals(0, underTest.getPersonInfoOfAnInhabitant("Antoine", "Antoine").size());
+    }
+
+    @Test
+    void getPersonInfoOfAnInhabitantWhereLastNameNotEquals() {
+        String[] medications = {"1", "2"};
+        List<MedicalRecord> list = new ArrayList<>();
+        String[] allergies = {"1, 2"};
+        list.add(new MedicalRecord(
+                1L,
+                "Antoine",
+                "Mus",
+                "03/29/1992",
+                medications,
+                allergies
+        ));
+        List<Person> personList = new ArrayList<>();
+        personList.add(person);
+
+        when(personRepository.getAllPersonsBySpecificFirstNameAndLastName(anyString(), anyString())).thenReturn(personList);
+        when(medicalRecordsRepostiory.getMedicalRecordsForSpecificFirstNameAndLastName(anyString(), anyString())).thenReturn(list);
+        assertEquals(0, underTest.getPersonInfoOfAnInhabitant("Antoine", "Antoine").size());
     }
 }

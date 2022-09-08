@@ -3,7 +3,6 @@ package com.example.safetynet.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,35 +23,7 @@ class PersonInfoDTOTest {
         );
     }
 
-    @Test
-    void testEquals() {
-        PersonInfoDTO toCompare = new PersonInfoDTO(
-                "mustang",
-                "rue",
-                6,
-                "gmail",
-                null,
-                null
-        );
-        assertTrue(underTest.equals(toCompare));
-    }
 
-    @Test
-    void canEqual() {
-        PersonInfoDTO toCompare = new PersonInfoDTO(
-                "mustang",
-                "rue",
-                6,
-                "gmail",
-                null,
-                null
-        );
-        assertTrue(underTest.canEqual(toCompare));
-    }
-
-    @Test
-    void testHashCode() {
-    }
 
     @Test
     void getLastName() {
@@ -76,12 +47,12 @@ class PersonInfoDTOTest {
 
     @Test
     void getMedications() {
-        assertEquals(null, underTest.getMedications());
+        assertNull(underTest.getMedications());
     }
 
     @Test
     void getAllergies() {
-        assertEquals(null, underTest.getAllergies());
+        assertNull(underTest.getAllergies());
     }
 
     @Test
@@ -112,14 +83,14 @@ class PersonInfoDTOTest {
 
     @Test
     void setMedications() {
-        List<String> medications = Arrays.asList("doliprane");
+        List<String> medications = List.of("doliprane");
         underTest.setMedications(medications);
         assertEquals(medications, underTest.getMedications());
     }
 
     @Test
     void setAllergies() {
-        List<String> allergies = Arrays.asList("pollens");
+        List<String> allergies = List.of("pollens");
         underTest.setAllergies(allergies);
         assertEquals(allergies, underTest.getAllergies());
     }

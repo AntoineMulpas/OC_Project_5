@@ -29,11 +29,14 @@ public class MedicalRecordService {
             medicalRecordsRepostiory.delete(medicalRecord);
     }
 
-    public void updateAMedicalRecord(Long id, MedicalRecord medicalRecord) {
-        Optional<MedicalRecord> medicalRecordFromDB = medicalRecordsRepostiory.findById(id);
-        medicalRecord.setBirthdate(medicalRecordFromDB.get().getBirthdate());
-        medicalRecord.setMedications(medicalRecordFromDB.get().getMedications());
-        medicalRecord.setAllergies(medicalRecordFromDB.get().getAllergies());
-        medicalRecordsRepostiory.save(medicalRecord);
+    public void updateAMedicalRecord(MedicalRecord medicalRecord) {
+        Optional<MedicalRecord> medicalRecordFromDB = medicalRecordsRepostiory.findById(medicalRecord.getId());
+        if(medicalRecordFromDB.isPresent()) {
+            MedicalRecord medicalRecordToSave = medicalRecordFromDB.get();
+            medicalRecordToSave.setBirthdate(medicalRecordFromDB.get().getBirthdate());
+            medicalRecordToSave.setMedications(medicalRecordFromDB.get().getMedications());
+            medicalRecordToSave.setAllergies(medicalRecordFromDB.get().getAllergies());
+            medicalRecordsRepostiory.save(medicalRecord);
+        }
     }
 }

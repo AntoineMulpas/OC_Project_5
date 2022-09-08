@@ -12,11 +12,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class MedicalRecordServiceTest {
@@ -59,5 +59,37 @@ class MedicalRecordServiceTest {
 
     @Test
     void updateAMedicalRecord() {
+        when(medicalRecordsRepostiory.findById(1L)).thenReturn(Optional.ofNullable(medicalRecord));
+        String[] medications = {"5", "5"};
+        String[] allergies = {"5, 5"};
+        MedicalRecord toUpdate = new MedicalRecord(
+                1L,
+                "Antoine",
+                "Antoine",
+                "01/01/1992",
+                medications,
+                allergies
+        );
+        underTest.updateAMedicalRecord(toUpdate);
+        verify(medicalRecordsRepostiory).save(toUpdate);
+
+    }
+
+    @Test
+    void updateAMedicalRecordIsNotPresent() {
+        when(medicalRecordsRepostiory.findById(1L)).thenReturn(Optional.empty());
+        String[] medications = {"5", "5"};
+        String[] allergies = {"5, 5"};
+        MedicalRecord toUpdate = new MedicalRecord(
+                1L,
+                "Antoine",
+                "Antoine",
+                "01/01/1992",
+                medications,
+                allergies
+        );
+        underTest.updateAMedicalRecord(toUpdate);
+        verify(medicalRecordsRepostiory, never()).save(toUpdate);
+
     }
 }

@@ -10,7 +10,6 @@ import java.util.Date;
 @Table(name = "medical_record")
 @Getter
 @Setter
-@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 public class MedicalRecord {

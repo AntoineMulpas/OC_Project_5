@@ -73,4 +73,27 @@ class FloodServiceTest {
         List <String> stationsList = Arrays.asList("1", "2");
         assertEquals(30, underTest.getPersonsInformationByStationInCaseOfFlood(stationsList).get(0).getFloodPersonInfoDTO().getAge());
     }
+
+    @Test
+    void getPersonsInformationByStationInCaseOfFloodWhenFirstNameNotEquals() {
+        List<Person> personList = new ArrayList<>();
+        personList.add(person);
+        List<FireStation> fireStationList = new ArrayList<>();
+        fireStationList.add(fireStation);
+        fireStationList.add(fireStation1);
+        MedicalRecord medicalRecord = new MedicalRecord(
+                1L,
+                "Mustang",
+                "Antoine",
+                "03/29/1992",
+                null,
+                null
+        );
+
+        when(fireStationRepository.findByStationEquals(fireStation.getStation())).thenReturn(fireStationList);
+        when(personRepository.getListOfPersonLivingAtSpecificAddress(person.getAddress())).thenReturn(personList);
+        when(medicalRecordsRepostiory.findByLastNameEqualsAndFirstNameEquals(medicalRecord.getLastName(), medicalRecord.getFirstName())).thenReturn(medicalRecord);
+        List <String> stationsList = Arrays.asList("1", "2");
+        assertEquals(2, underTest.getPersonsInformationByStationInCaseOfFlood(stationsList).size());
+    }
 }

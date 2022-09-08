@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ class PersonCoveredByFireStationServiceTest {
     private MedicalRecordsRepostiory medicalRecordsRepostiory;
     @Mock
     private FireStationRepository fireStationRepository;
+    @Autowired
     private PersonCoveredByFireStationService underTest;
     private Person person;
 
@@ -53,31 +55,53 @@ class PersonCoveredByFireStationServiceTest {
 
 
     @Test
-    @Disabled
-    void getPersonCoveredByFireStation() {
+    void getPersonCoveredByFireStationAgeSuperiorEighteen() {
         String[] medications = {"1", "2"};
         String[] allergies = {"1, 2"};
-        List <MedicalRecord> medicalRecordList = new ArrayList <>();
-        medicalRecordList.add(new MedicalRecord(
-                1L,
-                "Antoine",
-                "Antoine",
-                "29/03/1992",
-                medications,
-                allergies
-        ));
         List<Person> personList = new ArrayList<>();
         personList.add(person);
-
         List<FireStation> fireStationList = new ArrayList<>();
         fireStationList.add(new FireStation(
                 1L,
                 "1 rue",
                 "1"
                 ));
-        when(medicalRecordsRepostiory.getMedicalRecordsForSpecificFirstNameAndLastName(anyString(), anyString())).thenReturn(medicalRecordList);
-        when(personRepository.getListOfPersonLivingAtSpecificAddress(anyString())).thenReturn(personList);
-        when(fireStationRepository.getAddressForSpecificStation(anyString())).thenReturn(fireStationList);
+        when(personRepository.getListOfPersonLivingAtSpecificAddress("1 rue")).thenReturn(personList);
+        when(fireStationRepository.getAddressForSpecificStation("1")).thenReturn(fireStationList);
+        when(medicalRecordsRepostiory.findByLastNameEqualsAndFirstNameEquals("Antoine", "Antoine")).thenReturn(new MedicalRecord(
+                1L,
+                "Antoine",
+                "Antoine",
+                "03/29/1992",
+                medications,
+                allergies
+        ));
+
+        assertEquals("Antoine", underTest.getPersonCoveredByFireStation("1").get(0).getLastName());
+    }
+
+    @Test
+    void getPersonCoveredByFireStationAgeInferiorEighteen() {
+        String[] medications = {"1", "2"};
+        String[] allergies = {"1, 2"};
+        List<Person> personList = new ArrayList<>();
+        personList.add(person);
+        List<FireStation> fireStationList = new ArrayList<>();
+        fireStationList.add(new FireStation(
+                1L,
+                "1 rue",
+                "1"
+        ));
+        when(personRepository.getListOfPersonLivingAtSpecificAddress("1 rue")).thenReturn(personList);
+        when(fireStationRepository.getAddressForSpecificStation("1")).thenReturn(fireStationList);
+        when(medicalRecordsRepostiory.findByLastNameEqualsAndFirstNameEquals("Antoine", "Antoine")).thenReturn(new MedicalRecord(
+                1L,
+                "Antoine",
+                "Antoine",
+                "03/29/2019",
+                medications,
+                allergies
+        ));
 
         assertEquals("Antoine", underTest.getPersonCoveredByFireStation("1").get(0).getLastName());
     }

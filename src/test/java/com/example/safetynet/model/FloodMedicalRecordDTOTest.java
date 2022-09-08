@@ -16,25 +16,7 @@ class FloodMedicalRecordDTOTest {
         underTest = new FloodMedicalRecordDTO(medications, allergies);
     }
 
-    @Test
-    void testEquals() {
-        String[] medications = {"doliprane", "gaviscon"};
-        String[] allergies = {"pollens"};
-        FloodMedicalRecordDTO toCompare = new FloodMedicalRecordDTO(medications, allergies);
-        assertTrue(underTest.equals(toCompare));
-    }
 
-    @Test
-    void canEqual() {
-        String[] medications = {"doliprane", "gaviscon"};
-        String[] allergies = {"pollens"};
-        FloodMedicalRecordDTO toCompare = new FloodMedicalRecordDTO(medications, allergies);
-        assertTrue(underTest.canEqual(toCompare));
-    }
-
-    @Test
-    void testHashCode() {
-    }
 
     @Test
     void getMedications() {

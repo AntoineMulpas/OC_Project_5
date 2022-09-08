@@ -34,8 +34,6 @@ public class ChildAlertService {
         List<MedicalRecord> getListOfMedicalRecords = new ArrayList <>();
         personLivingAtSpecificAddress.forEach(person -> getListOfMedicalRecords.add(medicalRecordsRepostiory.findByLastNameEqualsAndFirstNameEquals(person.getLastName(), person.getFirstName())));
 
-
-
         getListOfMedicalRecords.stream()
                 .filter(medicalRecord -> (LocalDate.now().getYear() - dateParser(medicalRecord.getBirthdate()).getYear()) < 18)
                 .forEach(medicalRecord -> {
@@ -47,9 +45,6 @@ public class ChildAlertService {
                     childAlertDTO.setFamilyMembers(familyMembers);
                     childAlertDTOList.add(childAlertDTO);
                 });
-
-
-        childAlertDTOList.forEach(System.out::println);
 
         return childAlertDTOList;
     }

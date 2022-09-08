@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -27,14 +28,17 @@ public class PersonService {
         personRepository.deleteByFirstNameEqualsAndLastNameEquals(firstName, lastName);
     }
 
-    public void updateAPerson(Long id, Person personToUpdate) {
-        Person person = personRepository.findById(id).orElseThrow();
-        person.setAddress(personToUpdate.getAddress());
-        person.setCity(personToUpdate.getCity());
-        person.setEmail(personToUpdate.getEmail());
-        person.setPhone(personToUpdate.getPhone());
-        person.setZip(personToUpdate.getZip());
-        personRepository.save(person);
+    public void updateAPerson(Person personToUpdate) {
+        Optional<Person> optionalPerson = personRepository.findById(personToUpdate.getId());
+        if (optionalPerson.isPresent()) {
+            Person person = optionalPerson.get();
+            person.setAddress(personToUpdate.getAddress());
+            person.setCity(personToUpdate.getCity());
+            person.setEmail(personToUpdate.getEmail());
+            person.setPhone(personToUpdate.getPhone());
+            person.setZip(personToUpdate.getZip());
+            personRepository.save(person);
+        }
     }
 
     public List <String> getEmailForAllPeopleLivingInSpecificCity(String city) {

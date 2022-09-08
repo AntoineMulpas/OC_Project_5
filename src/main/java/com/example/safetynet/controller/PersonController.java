@@ -3,7 +3,6 @@ package com.example.safetynet.controller;
 import com.example.safetynet.model.Person;
 import com.example.safetynet.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,11 +51,10 @@ public class PersonController {
 
     @PutMapping()
     public ResponseEntity<String> updateAPerson(
-            @PathVariable Long id,
             @RequestBody Person person
     ) {
         try {
-            personService.updateAPerson(id, person);
+            personService.updateAPerson(person);
             return ResponseEntity.status(HttpStatus.OK).body("This person has been successfully updated");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Cannot update this person.");

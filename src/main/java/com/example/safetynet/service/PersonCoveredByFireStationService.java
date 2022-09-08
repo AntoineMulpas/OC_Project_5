@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class PersonCoveredByFireStationService {
@@ -50,7 +51,10 @@ public class PersonCoveredByFireStationService {
 
 
         List<Integer> listOfAgeOfPerson = new ArrayList<>();
-        getMedicalRecordOfPerson.forEach(medicalRecord -> {
+        getMedicalRecordOfPerson
+                .stream()
+                .filter(Objects::nonNull)
+                .forEach(medicalRecord -> {
             LocalDate birthdate = LocalDateParser.dateParser(medicalRecord.getBirthdate());
             int age = Period.between(birthdate, LocalDate.now()).getYears();
             listOfAgeOfPerson.add(age);

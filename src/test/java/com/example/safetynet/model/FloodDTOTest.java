@@ -22,37 +22,7 @@ class FloodDTOTest {
         );
     }
 
-    @Test
-    void testEquals() {
-        FloodDTO toCompare = new FloodDTO(
-                "rue",
-                new FloodPersonInfoDTO(
-                        "Mus",
-                        "1",
-                        6,
-                        null
-                )
-        );
-        assertTrue(underTest.equals(toCompare));
-    }
 
-    @Test
-    void canEqual() {
-        FloodDTO toCompare = new FloodDTO(
-                "rue",
-                new FloodPersonInfoDTO(
-                        "Mus",
-                        "1",
-                        6,
-                        null
-                )
-        );
-        assertTrue(underTest.equals(toCompare));
-    }
-
-    @Test
-    void testHashCode() {
-    }
 
     @Test
     void getAddress() {
@@ -67,7 +37,7 @@ class FloodDTOTest {
                 6,
                 null
         );
-        assertEquals(floodPersonInfoDTO, underTest.getFloodPersonInfoDTO());
+        assertEquals(floodPersonInfoDTO.getAge(), underTest.getFloodPersonInfoDTO().getAge());
     }
 
     @Test

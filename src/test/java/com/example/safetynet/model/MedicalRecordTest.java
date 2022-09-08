@@ -22,36 +22,6 @@ class MedicalRecordTest {
     }
 
     @Test
-    void testEquals() {
-        MedicalRecord toCompare = new MedicalRecord(
-                1L,
-                "mustang",
-                "mustang",
-                "2016-04-06",
-                null,
-                null
-        );
-        assertTrue(underTest.equals(toCompare));
-    }
-
-    @Test
-    void canEqual() {
-        MedicalRecord toCompare = new MedicalRecord(
-                1L,
-                "mustag",
-                "mustang",
-                "2016-04-06",
-                null,
-                null
-        );
-        assertTrue(underTest.canEqual(toCompare));
-    }
-
-    @Test
-    void testHashCode() {
-    }
-
-    @Test
     void getId() {
         assertEquals(1L, underTest.getId());
     }

@@ -17,8 +17,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.Optional;
 
@@ -27,6 +26,7 @@ class PersonServiceTest {
 
     @Mock
     private PersonRepository personRepository;
+    @Autowired
     private PersonService underTest;
     private Person person;
 
@@ -74,9 +74,37 @@ class PersonServiceTest {
     }
 
     @Test
-    @Disabled
     void updateAPerson() {
+        when(personRepository.findById(1L)).thenReturn(Optional.ofNullable(person));
+        Person toUpDate = new Person(
+                1L,
+                "Antoine",
+                "Antoine",
+                "boulevard",
+                "roubaix",
+                "59000",
+                "07",
+                "email@email.com"
+        );
+        underTest.updateAPerson(toUpDate);
+        verify(personRepository).save(toUpDate);
+    }
 
+    @Test
+    void updateAPersonNotPresent() {
+        when(personRepository.findById(1L)).thenReturn(Optional.empty());
+        Person toUpDate = new Person(
+                1L,
+                "Antoine",
+                "Antoine",
+                "boulevard",
+                "roubaix",
+                "59000",
+                "07",
+                "email@email.com"
+        );
+        underTest.updateAPerson(toUpDate);
+        verify(personRepository, never()).save(toUpDate);
     }
 
     @Test

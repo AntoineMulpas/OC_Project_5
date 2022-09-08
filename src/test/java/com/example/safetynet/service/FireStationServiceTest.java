@@ -9,16 +9,20 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.nullable;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class FireStationServiceTest {
 
+    @Autowired
     private FireStationService underTest;
     @Mock
     private FireStationRepository fireStationRepository;
@@ -50,12 +54,19 @@ class FireStationServiceTest {
     }
 
     @Test
-    @Disabled
     void updateAFireStations() {
-        when(fireStationRepository.findByAddressEqualsAndStationEquals("1 rue", "1")).thenReturn(fireStation);
-        FireStation fireStationToUpdate = new FireStation(1L, "2 boulevard", "1");
+        when(fireStationRepository.findById(1L)).thenReturn(Optional.ofNullable(fireStation));
+        FireStation fireStationToUpdate = new FireStation(1L, "1 rue", "2");
         underTest.updateAFireStations(fireStationToUpdate);
         verify(fireStationRepository).save(fireStationToUpdate);
+    }
+
+    @Test
+    void updateAFireStationsNotPresent() {
+        when(fireStationRepository.findById(1L)).thenReturn(Optional.empty());
+        FireStation fireStationToUpdate = new FireStation(1L, "1 rue", "2");
+        underTest.updateAFireStations(fireStationToUpdate);
+        verify(fireStationRepository, never()).save(fireStationToUpdate);
     }
 
     @Test

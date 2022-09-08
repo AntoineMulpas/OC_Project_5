@@ -47,11 +47,10 @@ public class MedicalRecordController {
 
     @PutMapping("/{id}")
     public ResponseEntity<String> updateAMedicalRecord(
-            @PathVariable Long id, //use request body
             @RequestBody MedicalRecord medicalRecord
     ) {
         try {
-            medicalRecordService.updateAMedicalRecord(id, medicalRecord);
+            medicalRecordService.updateAMedicalRecord(medicalRecord);
             return ResponseEntity.status(HttpStatus.OK).body("Medical record has been updated successfully.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("An error occurred : " + e);

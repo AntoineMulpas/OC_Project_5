@@ -71,6 +71,32 @@ class PersonTest {
 
     @Test
     void testHashCode() {
+        Person person = new Person(
+                1L,
+                "Antoine",
+                "Antoine",
+                "1 rue",
+                "Lille",
+                "59000",
+                "07",
+                "email@email.com"
+        );
+        assertEquals(underTest.hashCode(), person.hashCode());
+    }
+
+    @Test
+    void testHashCodeReturnFalse() {
+        Person person = new Person(
+                1L,
+                "Antonio",
+                "Antoine",
+                "1 rue",
+                "Lille",
+                "59000",
+                "07",
+                "email@email.com"
+        );
+        assertNotEquals(underTest.hashCode(), person.hashCode());
     }
 
 

@@ -6,8 +6,6 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
-@ToString
 public class FloodPersonInfoDTO {
 
     private String lastName;

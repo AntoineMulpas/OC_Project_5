@@ -43,7 +43,7 @@ class ChildAlertServiceTest {
     }
 
     @Test
-    void getListOfChildLivingAtSpecificAddress() {
+    void getListOfChildLivingAtSpecificAddressWhenAgeIsLessThanEighteen() {
         String[] medications = {"1", "2"};
         String[] allergies = {"1, 2"};
         MedicalRecord medicalRecord = new MedicalRecord(
@@ -61,5 +61,26 @@ class ChildAlertServiceTest {
         when(personRepository.getListOfPersonLivingAtSpecificAddress(anyString())).thenReturn(personList);
 
         assertEquals("Antoine", underTest.getListOfChildLivingAtSpecificAddress("1 rue").get(0).getLastName());
+    }
+
+    @Test
+    void getListOfChildLivingAtSpecificAddressWhenAgeIsSuperiorThanEighteen() {
+        String[] medications = {"1", "2"};
+        String[] allergies = {"1, 2"};
+        MedicalRecord medicalRecord = new MedicalRecord(
+                1L,
+                "Antoine",
+                "Antoine",
+                "03/29/1992",
+                medications,
+                allergies
+        );
+        List<Person> personList = new ArrayList<>();
+        personList.add(person);
+
+        when(medicalRecordsRepostiory.findByLastNameEqualsAndFirstNameEquals(anyString(), anyString())).thenReturn(medicalRecord);
+        when(personRepository.getListOfPersonLivingAtSpecificAddress(anyString())).thenReturn(personList);
+
+        assertEquals(0, underTest.getListOfChildLivingAtSpecificAddress("1 rue").size());
     }
 }
