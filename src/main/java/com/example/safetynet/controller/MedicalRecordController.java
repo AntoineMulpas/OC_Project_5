@@ -2,6 +2,8 @@ package com.example.safetynet.controller;
 
 import com.example.safetynet.model.MedicalRecord;
 import com.example.safetynet.service.MedicalRecordService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
 @Transactional
 public class MedicalRecordController {
 
-    private MedicalRecordService medicalRecordService;
+    private final MedicalRecordService medicalRecordService;
+    private static final Logger logger = LogManager.getLogger(MedicalRecordController.class);
+
 
     @Autowired
     public MedicalRecordController(MedicalRecordService medicalRecordService) {
@@ -25,9 +29,11 @@ public class MedicalRecordController {
             @RequestBody MedicalRecord medicalRecord
             ) {
         try {
+            logger.info("Medical record of " + medicalRecord.getFirstName() + " " + medicalRecord.getLastName() + " succesfully added.");
             medicalRecordService.addMedicalRecord(medicalRecord);
             return ResponseEntity.status(HttpStatus.OK).body("Medical record has been added successfully.");
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
+            logger.error(e);
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("An error occurred : " + e);
         }
     }
@@ -38,9 +44,11 @@ public class MedicalRecordController {
             @PathVariable String firstName
             ) {
         try {
+            logger.info("Medical record of " + firstName + " " + lastName + " successfully deleted.");
             medicalRecordService.deleteAMedicalRecord(lastName, firstName);
             return ResponseEntity.status(HttpStatus.OK).body("Medical record has been deleted successfully.");
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
+            logger.error(e);
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("An error occurred : " + e);
         }
     }
@@ -50,9 +58,11 @@ public class MedicalRecordController {
             @RequestBody MedicalRecord medicalRecord
     ) {
         try {
+            logger.info("Medical record of " + medicalRecord.getFirstName() + " " + medicalRecord.getLastName() + " successfully updated.");
             medicalRecordService.updateAMedicalRecord(medicalRecord);
             return ResponseEntity.status(HttpStatus.OK).body("Medical record has been updated successfully.");
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
+            logger.error(e);
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("An error occurred : " + e);
         }
     }

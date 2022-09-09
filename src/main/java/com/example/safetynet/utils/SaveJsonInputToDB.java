@@ -15,10 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Date;
 import java.util.Map;
 
 @Service
@@ -68,13 +68,8 @@ public class SaveJsonInputToDB {
                     }
                 }
             }
-            System.out.println("Saving into DB with success.");
-            personRepository.findAll().forEach(System.out::println);
-            fireStationRepository.findAll().forEach(System.out::println);
-            medicalRecordsRepostiory.findAll().forEach(System.out::println);
-
-        } catch (Exception e) {
-            System.out.println(e);
+            logger.info("Data from Json saved into DB with success.");
+        } catch (RuntimeException | IOException e) {
             logger.error(e);
         }
 

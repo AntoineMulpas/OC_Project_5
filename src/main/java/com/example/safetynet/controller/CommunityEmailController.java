@@ -1,6 +1,8 @@
 package com.example.safetynet.controller;
 
 import com.example.safetynet.service.PersonService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,6 +14,7 @@ import java.util.List;
 public class CommunityEmailController {
 
     private final PersonService personService;
+    private static final Logger logger = LogManager.getLogger(CommunityEmailController.class);
 
     @Autowired
     public CommunityEmailController(PersonService personService) {
@@ -22,7 +25,13 @@ public class CommunityEmailController {
     public List <String> getEmailForAllPeopleLivingInSpecificCity(
             @RequestParam String city
     ) {
-        return personService.getEmailForAllPeopleLivingInSpecificCity(city);
+        try {
+            logger.info("List of email for people living in " + city + " successfully fetched.");
+            return personService.getEmailForAllPeopleLivingInSpecificCity(city);
+        } catch (RuntimeException e) {
+            logger.error(e);
+            return null;
+        }
     }
 
 }

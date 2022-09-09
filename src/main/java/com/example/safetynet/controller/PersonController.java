@@ -2,6 +2,8 @@ package com.example.safetynet.controller;
 
 import com.example.safetynet.model.Person;
 import com.example.safetynet.service.PersonService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import java.util.List;
 public class PersonController {
 
     private final PersonService personService;
+    private static final Logger logger = LogManager.getLogger(PersonController.class);
 
     @Autowired
     public PersonController(PersonService personService) {
@@ -28,9 +31,11 @@ public class PersonController {
             @RequestBody Person person
     ) {
         try {
+            logger.info("Person " + person.getFirstName() + " " + person.getLastName() + " added succesfully");
             personService.addAPerson(person);
             return ResponseEntity.ok().body("Person has been successfully saved.");
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
+            logger.error(e);
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("An error occured : " + e);
         }
     }
@@ -41,9 +46,11 @@ public class PersonController {
             @RequestParam String lastName
     ) {
         try {
+            logger.info("Person " + firstName + " " + lastName + " deleted succesfully");
             personService.deleteAPerson(firstName, lastName);
             return ResponseEntity.status(HttpStatus.OK).body("Person has been successfully deleted.");
-        } catch (Exception e) { //Defined exception
+        } catch (RuntimeException e) {
+            logger.error(e);
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Failed to delete this person: " + e);
         }
     }
@@ -54,18 +61,26 @@ public class PersonController {
             @RequestBody Person person
     ) {
         try {
+            logger.info("Person " + person.getFirstName() + " " + person.getLastName() + " updated succesfully");
             personService.updateAPerson(person);
             return ResponseEntity.status(HttpStatus.OK).body("This person has been successfully updated");
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
+            logger.error(e);
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Cannot update this person.");
         }
     }
 
 
     @GetMapping("/all")
-    public List<Person> getAllPerson() {
+    public List <Person> getAllPerson() {
+        try {
+            logger.info("List of all person successfully fetched.");
             return personService.getAllPerson();
+        } catch (RuntimeException e) {
+            logger.error(e);
+            return null;
         }
+    }
 
 
 }
