@@ -1,9 +1,8 @@
 package com.example.safetynet.service;
 
-import com.example.safetynet.model.PersonDTO;
 import com.example.safetynet.model.Person;
+import com.example.safetynet.model.PersonDTO;
 import com.example.safetynet.repository.PersonRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +10,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class PersonService {
 
     private final PersonRepository personRepository;
+
+    @Autowired
+    public PersonService(PersonRepository personRepository) {
+        this.personRepository = personRepository;
+    }
 
     public void addAPerson(Person person) {
         personRepository.save(person);
