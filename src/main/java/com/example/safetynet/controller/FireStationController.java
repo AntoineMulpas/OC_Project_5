@@ -33,6 +33,7 @@ public class FireStationController {
     public ResponseEntity<String> addAFireStation(
             @RequestBody FireStation fireStation
     ) {
+        logger.debug("Adding a new fire station is requested: " + fireStation.getStation() + " " + fireStation.getAddress());
         try {
             logger.info("Fire station " + fireStation.getStation() + " successfully added.");
             fireStationService.addAFireStation(fireStation);
@@ -47,6 +48,7 @@ public class FireStationController {
     public ResponseEntity<String> deleteAFireStation(
             @PathVariable Long id
     ) {
+        logger.debug("Deleting fire-station " + id + " is requested.");
         try {
             logger.info("Fire station id: " + id + " successfully deleted.");
             fireStationService.deleteAFireStation(id);
@@ -62,6 +64,7 @@ public class FireStationController {
     public ResponseEntity<String> updateAFireStation(
             @RequestBody FireStation fireStation
     ) {
+        logger.debug("Updated fire-station " + fireStation.getStation() + " is requested.");
         try {
             logger.info("Fire station " + fireStation.getStation() + " successfully updated.");
             fireStationService.updateAFireStations(fireStation);
@@ -72,11 +75,11 @@ public class FireStationController {
         }
     }
 
-
     @GetMapping
     public List <PersonCoveredByFireStationDTO> getListOfPersonByFireStation(
             @RequestParam String stationNumber
     ) {
+        logger.debug("Requesting list of person served by fire-station: "  + stationNumber);
         try {
             logger.info("List of person covered by fire station " + stationNumber + " successfully fetched.");
             return personCoveredByFireStationService.getPersonCoveredByFireStation(stationNumber);
@@ -85,5 +88,6 @@ public class FireStationController {
             return null;
         }
     }
+
 
 }

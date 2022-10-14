@@ -27,6 +27,7 @@ public class PersonInfoController {
             @RequestParam String firstName,
             @RequestParam String lastName
     ) {
+        logger.debug("Requesting information concerning " + firstName + " " + lastName);
         try {
             logger.info("Informations concerning " + firstName + " " + lastName + " fetched sucessfully");
             return personInfoService.getPersonInfoOfAnInhabitant(firstName, lastName);

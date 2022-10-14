@@ -26,6 +26,7 @@ public class ChildAlertController {
     public List <ChildAlertDTO> getListOfChildLivingAtSpecificAddress(
             @RequestParam String address
     ) {
+        logger.debug("List of child living at specific address requested : " + address);
         try {
             logger.info("List of child living at address " + address + " successfully fetched.");
             return childAlertService.getListOfChildLivingAtSpecificAddress(address);

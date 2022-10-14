@@ -10,8 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/person")
 @Transactional
@@ -30,6 +28,7 @@ public class PersonController {
     public ResponseEntity<String> addAPerson(
             @RequestBody Person person
     ) {
+        logger.debug("Requesting adding new person: " + person.getFirstName() + " " + person.getLastName());
         try {
             logger.info("Person " + person.getFirstName() + " " + person.getLastName() + " added succesfully");
             personService.addAPerson(person);
@@ -45,6 +44,7 @@ public class PersonController {
             @RequestParam String firstName,
             @RequestParam String lastName
     ) {
+        logger.debug("Requesting deleting new person: " + firstName + " " + lastName);
         try {
             logger.info("Person " + firstName + " " + lastName + " deleted succesfully");
             personService.deleteAPerson(firstName, lastName);
@@ -60,6 +60,7 @@ public class PersonController {
     public ResponseEntity<String> updateAPerson(
             @RequestBody Person person
     ) {
+        logger.debug("Requesting updating new person: " + person.getFirstName() + " " + person.getLastName());
         try {
             logger.info("Person " + person.getFirstName() + " " + person.getLastName() + " updated succesfully");
             personService.updateAPerson(person);
@@ -69,18 +70,5 @@ public class PersonController {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Cannot update this person.");
         }
     }
-
-
-    @GetMapping("/all")
-    public List <Person> getAllPerson() {
-        try {
-            logger.info("List of all person successfully fetched.");
-            return personService.getAllPerson();
-        } catch (RuntimeException e) {
-            logger.error(e);
-            return null;
-        }
-    }
-
 
 }

@@ -26,6 +26,7 @@ public class FloodController {
     public List<FloodDTO> getPersonsInformationByStationInCaseOfFlood(
             @RequestParam List<String> stations
     ) {
+        logger.debug("List of person served by specific stations in case of flood requested.");
         try {
             logger.info("Person's informations for stations : " + stations.toString() + " successfully fetched.");
             return floodService.getPersonsInformationByStationInCaseOfFlood(stations);

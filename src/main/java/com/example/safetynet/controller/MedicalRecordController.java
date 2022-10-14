@@ -28,6 +28,7 @@ public class MedicalRecordController {
     public ResponseEntity<String> addAMedicalRecord(
             @RequestBody MedicalRecord medicalRecord
             ) {
+        logger.debug("Requesting adding new medical record: " + medicalRecord.getFirstName() + " " + medicalRecord.getLastName());
         try {
             logger.info("Medical record of " + medicalRecord.getFirstName() + " " + medicalRecord.getLastName() + " succesfully added.");
             medicalRecordService.addMedicalRecord(medicalRecord);
@@ -43,6 +44,7 @@ public class MedicalRecordController {
             @PathVariable String lastName,
             @PathVariable String firstName
             ) {
+        logger.debug("Requesting deleting new medical record: " + firstName + " " + lastName);
         try {
             logger.info("Medical record of " + firstName + " " + lastName + " successfully deleted.");
             medicalRecordService.deleteAMedicalRecord(lastName, firstName);
@@ -57,6 +59,7 @@ public class MedicalRecordController {
     public ResponseEntity<String> updateAMedicalRecord(
             @RequestBody MedicalRecord medicalRecord
     ) {
+        logger.debug("Requesting updated medical record of " + medicalRecord.getFirstName() + " " + medicalRecord.getLastName());
         try {
             logger.info("Medical record of " + medicalRecord.getFirstName() + " " + medicalRecord.getLastName() + " successfully updated.");
             medicalRecordService.updateAMedicalRecord(medicalRecord);

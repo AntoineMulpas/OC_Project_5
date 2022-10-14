@@ -26,6 +26,7 @@ public class FireController {
     public List <InhabitantsByAddressDTO> getStationAndInhabitantsInformationByAddress(
             @RequestParam String address
     ) {
+        logger.debug("List of person living at specific address and station number requested for address : " + address);
         try {
             logger.info("Inhabitants by address " + address + " succesfully fetched.");
             return fireService.getStationAndInhabitantsInformationByAddress(address);

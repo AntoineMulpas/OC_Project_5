@@ -2,7 +2,6 @@ package com.example.safetynet.controller;
 
 import com.example.safetynet.model.PhoneAlertDTO;
 import com.example.safetynet.service.FireStationService;
-import com.example.safetynet.utils.SaveJsonInputToDB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +27,7 @@ public class PhoneAlertController {
     public List <PhoneAlertDTO> getPhoneNumberOfPeopleForSpecificFirestation(
             @RequestParam String firestation
     ) {
+        logger.debug("Requesting phone number of people served by specific fire-station: " + firestation);
         try {
             logger.info("Requested firestation: " + firestation + " fetched with success.");
             return fireStationService.getPhoneNumberOfPeopleForSpecificFirestation(firestation);

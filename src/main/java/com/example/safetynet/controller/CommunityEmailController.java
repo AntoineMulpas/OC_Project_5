@@ -25,6 +25,7 @@ public class CommunityEmailController {
     public List <String> getEmailForAllPeopleLivingInSpecificCity(
             @RequestParam String city
     ) {
+        logger.debug("List of email of people living in specific city: " + city + " requested.");
         try {
             logger.info("List of email for people living in " + city + " successfully fetched.");
             return personService.getEmailForAllPeopleLivingInSpecificCity(city);
