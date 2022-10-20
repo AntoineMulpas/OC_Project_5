@@ -19,7 +19,7 @@ public class FloodIT {
     @Test
     void getPersonsInformationByStationInCaseOfFlood() throws Exception {
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/flood")
+                MockMvcRequestBuilders.get("/flood/station")
                         .param("stations", "1", "2")
         ).andExpect(status().isOk());
     }

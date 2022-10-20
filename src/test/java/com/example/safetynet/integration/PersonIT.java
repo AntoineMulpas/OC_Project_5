@@ -72,9 +72,5 @@ public class PersonIT {
                 .andExpect(status().isOk());
     }
 
-    @Test
-    void getAllPerson() throws Exception {
-        mockMvc.perform(get("/person/all")).andExpect(status().isOk());
-    }
 
 }
